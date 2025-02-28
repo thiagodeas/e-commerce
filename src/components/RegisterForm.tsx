@@ -48,7 +48,7 @@ export default function RegisterForm() {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="flex items-center flex-col justify-center w-2/5 h-auto border rounded-[4px] border-[#f97316] p-8">
+      <div className="flex items-center flex-col justify-center w-[400px] h-[550px] rounded-l-[10px] bg-white shadow-xl">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
             <FormField
@@ -56,11 +56,11 @@ export default function RegisterForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="name" className="text-[#bb5d1a]">Nome</FormLabel>
+                  <FormLabel htmlFor="name" className="text-[#EF4444]">Nome</FormLabel>
                   <FormControl>
-                    <Input id="name" type="text" placeholder="Digite seu nome" className=" border-[#f97316] placeholder-[#f9731690]"{...field} />
+                    <Input id="name" type="text" placeholder="Digite seu nome" className=" border-[#EF4444]"{...field} />
                   </FormControl>
-                  <FormMessage className="text-[#bb5d1a]" />
+                  <FormMessage className="text-[#EF4444]" />
                 </FormItem>
               )}
             />
@@ -70,11 +70,11 @@ export default function RegisterForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="email" className="text-[#bb5d1a]">E-mail</FormLabel>
+                  <FormLabel htmlFor="email" className="text-[#EF4444]">E-mail</FormLabel>
                   <FormControl>
-                    <Input id="email" type="text" placeholder="Digite seu e-mail" className=" border-[#f97316] placeholder-[#f9731690]"{...field} />
+                    <Input id="email" type="text" placeholder="Digite seu e-mail" className=" border-[#EF4444]"{...field} />
                   </FormControl>
-                  <FormMessage className="text-[#bb5d1a]"/>
+                  <FormMessage className="text-[#EF4444]"/>
                 </FormItem>
               )}
             />
@@ -84,28 +84,31 @@ export default function RegisterForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="password" className="text-[#bb5d1a]">Senha</FormLabel>
+                  <FormLabel htmlFor="password" className="text-[#EF4444]">Senha</FormLabel>
                   <FormControl>
-                    <Input id="password" type="password" placeholder="Digite sua senha" className=" border-[#f97316] placeholder-[#f9731690]"{...field} />
+                    <Input id="password" type="password" placeholder="Digite sua senha" className=" border-[#EF4444]"{...field} />
                   </FormControl>
-                  <FormMessage className="text-[#bb5d1a]"/>
+                  <FormMessage className="text-[#EF4444]"/>
                 </FormItem>
               )}
             />
 
-            <div className="space-y-5 pt-6">
+            <div className="space-y-5">
               <div className="flex items-center justify-center">
-                <Button type="submit" className="bg-[#f97316] hover:bg-[#bb5d1a] transition-all ease-in-out duration-500">Criar Conta</Button>
+                <Button type="submit" className="bg-[#EF4444] hover:bg-[#ef4444ce] transition-all ease-in-out duration-500">Criar Conta</Button>
               </div>
 
-              <div className="w-full h-[2px] border border-[#f97316] opacity-30"></div>
+              <div className="w-full h-[2px] border border-[#EF4444] opacity-30"></div>
 
               <div className="flex items-center justify-center mt-4">
-                <Button type="button" onClick={handleRedirectToLogin} className="bg-[#2563eb] hover:bg-[#1e52c2] transition-all ease-in-out duration-500">Já tem uma conta? Entrar</Button>
+                <Button type="button" onClick={handleRedirectToLogin} className="bg-[#4F46E5] hover:bg-[#6366F1] transition-all ease-in-out duration-500">Já tem uma conta? Entrar</Button>
               </div>
             </div>
           </form>
         </Form>
+      </div>
+      <div className="flex items-center flex-col justify-center w-[400px] h-[550px] bg-[#EF4444] rounded-r-[10px]">
+
       </div>
     </div>
   );
