@@ -1,11 +1,9 @@
-// app/page.tsx
-import Link from 'next/link';
+import Head from "next/head";
 
 export default function HomePage() {
   return (
-    <div>
-    
-   
-    </div>
+    <Head>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
   );
 }
