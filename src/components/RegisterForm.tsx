@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import "../styles/globals.css";
+import axios from "axios";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
+
 
 const FormSchema = z.object({
   name: z.string().min(3, { message: "O campo Nome deve conter no mínimo 3 caracteres." }),
@@ -37,9 +40,17 @@ export default function RegisterForm() {
   });
 
   const router = useRouter();
+  const { toast } = useToast();
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("Chame o backend para criar a conta");
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      await axios.post("http://localhost:3001/auth/register", data);
+      toast({ variant: "success", title: "Seja bem vindo!", description: "Conta criada com sucesso." });
+
+      router.push("/login");
+    } catch (error) {
+      toast({ variant: "destructive", title: "Opa! Algo de errado não está certo.", description: "Erro ao criar conta. Tente novamente." })
+    }
   }
 
   function handleRedirectToLogin() {
