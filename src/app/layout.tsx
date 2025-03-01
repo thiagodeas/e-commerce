@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import Header from "@/components/Header";
+import { Toaster } from "@/components/ui/toaster"
+
 
 export const metadata: Metadata = {
   title: "E-commerce",
@@ -17,6 +19,7 @@ export default function RootLayout({
       <body className="bg-[#F8FAFC]">
         <Header />
         {children}
+        <Toaster />
       </body>
     </html>
   );

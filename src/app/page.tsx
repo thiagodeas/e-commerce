@@ -5,5 +5,6 @@ export default function HomePage() {
     <Head>
       <link rel="icon" href="/favicon.ico" />
     </Head>
+    
   );
 }
