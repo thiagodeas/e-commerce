@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { toast } from "@/hooks/use-toast";
 
 const FormSchema = z.object({
   email: z.string()
@@ -37,9 +39,16 @@ export default function LoginForm() {
 
   const router = useRouter();
 
-  // Chamar backend aqui, só dpss
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log('Chame o backend');
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      const response = await axios.post("/login", data);
+      const accessToken = response.data.accessToken;
+      localStorage.setItem("accessToken", accessToken);
+
+      router.push("/");
+    } catch (error) {
+      toast({ variant: "destructive", title: "Opa! Algo de errado não está certo.", description: "Erro ao fazer login. Tente novamente." });
+    }
   }
 
   function handleRedirectToRegister() {

@@ -44,12 +44,12 @@ export default function RegisterForm() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      await axios.post("http://localhost:3001/auth/register", data);
+      await axios.post("/register", data);
       toast({ variant: "success", title: "Seja bem vindo!", description: "Conta criada com sucesso." });
 
       router.push("/login");
     } catch (error) {
-      toast({ variant: "destructive", title: "Opa! Algo de errado não está certo.", description: "Erro ao criar conta. Tente novamente." })
+      toast({ variant: "destructive", title: "Opa! Algo de errado não está certo.", description: "Erro ao criar conta. Tente novamente." });
     }
   }
 
