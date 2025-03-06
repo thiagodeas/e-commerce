@@ -16,6 +16,8 @@ export default function HomePage() {
     const plugin = React.useRef(
       Autoplay({ delay: 6000, stopOnInteraction: true })
     );
+
+    const images = ["/page-1.png", "/page-2.png", "/page-3.png"];
     
   return (
     <div className="w-full min-h-full flex items-center justify-center text-center">
@@ -27,20 +29,20 @@ export default function HomePage() {
       onMouseLeave={plugin.current.reset}
     >
       <CarouselContent>
-        {Array.from({ length: 3 }).map((_, index) => (
+        {images.map((image, index) => (
           <CarouselItem key={index} className="w-full">
             <div className="w-full">
               <Card>
                 <CardContent>
-                  <img src="https://placehold.co/1350x400" alt="Promoções" className="w-full h-auto" />
+                  <img src={image} alt="Carousel Banner" className="w-full h-auto" />
                 </CardContent>
               </Card>
             </div>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute left-12 top-1/2 transform -translate-y-1/2"/>
-      <CarouselNext className="absolute right-12 top-1/2 transform -translate-y-1/2"/>
+      <CarouselPrevious className="absolute left-12 top-1/2 transform -translate-y-1/2 bg-white border-none hover:bg-white hover:scale-110"/>
+      <CarouselNext className="absolute right-12 top-1/2 transform -translate-y-1/2 bg-white border-none hover:bg-white hover:scale-110"/>
     </Carousel>
 
     </div>
