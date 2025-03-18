@@ -41,8 +41,8 @@ export default function Header() {
     <header className="w-full h-[150px] flex-col justify-between items-center">
       <div className="flex items-center justify-around w-full pt-8">
         <div className="flex items-center gap-2">
-          <h1 className="text-[30px] font-bold text-[#4F46E5]">ClickShop</h1>
-          <GiClick className="w-[40px] h-[40px] text-[#4F46E5]" />
+          <Link className="text-[30px] font-bold text-[#4F46E5]" href="/">ClickShop</Link>
+          <Link href="/"><GiClick className="w-[40px] h-[40px] text-[#4F46E5]"></GiClick></Link>
         </div>
 
         <nav className="flex justify-center items-center gap-4">
