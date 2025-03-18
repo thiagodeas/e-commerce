@@ -14,7 +14,7 @@ import Autoplay from 'embla-carousel-autoplay';
 
 export default function HomePage() {
     const plugin = React.useRef(
-      Autoplay({ delay: 6000, stopOnInteraction: true })
+      Autoplay({ delay: 4000, stopOnInteraction: true })
     );
 
     const images = ["/page-1.png", "/page-2.png", "/page-3.png"];
@@ -25,8 +25,6 @@ export default function HomePage() {
          <Carousel
       plugins={[plugin.current]}
       className="w-full flex items-center justify-center"
-      onMouseEnter={plugin.current.stop}
-      onMouseLeave={plugin.current.reset}
     >
       <CarouselContent>
         {images.map((image, index) => (
