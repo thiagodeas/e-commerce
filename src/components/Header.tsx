@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import axios from "axios";
 
 import { FaShoppingCart } from "react-icons/fa";
 import { GiClick } from "react-icons/gi";
+import { axiosCategoriesInstance } from "@/axiosConfig";
 
 export default function Header() {
   const pathName = usePathname();
@@ -21,7 +21,7 @@ export default function Header() {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const response = await axios.get("http://localhost:3001/categories");
+        const response = await axiosCategoriesInstance.get("/");
         console.log(response.data.categories);
 
         if (Array.isArray(response.data.categories)) {

@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import "../styles/globals.css";
-import axios from "axios";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
+import { axiosAuthInstance } from "@/axiosConfig";
 
 
 const FormSchema = z.object({
@@ -44,7 +44,7 @@ export default function RegisterForm() {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      await axios.post("/register", data);
+      await axiosAuthInstance.post("/register", data);
       toast({ variant: "success", title: "Seja bem vindo!", description: "Conta criada com sucesso." });
 
       router.push("/login");

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import axios from "axios";
 import Link from "next/link";
+import { axiosCategoriesInstance, axiosProductsInstance } from "@/axiosConfig";
 
 export default function CategoryPage() {
   const { id } = useParams();
@@ -16,7 +16,7 @@ export default function CategoryPage() {
 
     async function fetchProducts() {
       try {
-        const response = await axios.get(`http://localhost:3001/products/category/${id}`);
+        const response = await axiosProductsInstance.get(`/category/${id}`);
         setProducts(response.data.products);
       } catch (err) {
         setError("Erro ao carregar produtos.");
@@ -25,7 +25,7 @@ export default function CategoryPage() {
 
     async function fetchCategory() {
       try {
-        const response = await axios.get(`http://localhost:3001/categories/${id}`);
+        const response = await axiosCategoriesInstance.get(`/${id}`);
         setCategoryName(response.data.category.name); 
       } catch (err) {
         setCategoryName("Categoria não encontrada");
