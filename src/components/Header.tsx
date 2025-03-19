@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { FaShoppingCart } from "react-icons/fa";
+import { BsCart } from "react-icons/bs";
+
 import { GiClick } from "react-icons/gi";
 import { axiosCategoriesInstance } from "@/axiosConfig";
 
@@ -54,7 +56,7 @@ export default function Header() {
             />
           </div>
           <Link href="#">
-            <FaShoppingCart className="w-[25px] h-[25px] text-[#1E293B] transition-all ease-in-out duration-500 hover:text-[#4F46E5]" />
+            <BsCart className="w-[30px] h-[30px] text-[#1E293B] transition-all ease-in-out duration-500 hover:text-[#4F46E5] hover:scale-110" />
           </Link>
         </nav>
       </div>
