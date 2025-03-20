@@ -4,10 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { FaShoppingCart } from "react-icons/fa";
 import { BsCart } from "react-icons/bs";
-
 import { GiClick } from "react-icons/gi";
+
 import { axiosCategoriesInstance } from "@/axiosConfig";
 
 export default function Header() {
@@ -19,12 +18,12 @@ export default function Header() {
 
   const [categories, setCategories] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchCategories() {
       try {
         const response = await axiosCategoriesInstance.get("/");
-        console.log(response.data.categories);
 
         if (Array.isArray(response.data.categories)) {
           setCategories(response.data.categories);
@@ -39,6 +38,15 @@ export default function Header() {
     fetchCategories();
   }, []);
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+     
+    if (searchTerm.trim()) {
+   
+      window.location.href = `/search?query=${searchTerm}`;
+    }
+  };
+
   return (
     <header className="w-full h-[150px] flex-col justify-between items-center">
       <div className="flex items-center justify-around w-full pt-8">
@@ -49,11 +57,16 @@ export default function Header() {
 
         <nav className="flex justify-center items-center gap-4">
           <div className="flex items-center justify-center">
+          <form onSubmit={handleSearchSubmit} className="flex items-center justify-center">
             <input
               type="text"
               placeholder="Buscar produtos"
               className="px-4 border-[#1E293B] bg-[#1e293b15] w-[500px] h-[38px] rounded-[4px] focus:outline-none focus:border-none focus:ring-2 focus:ring-[#4F46E5]"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
+             <button type="submit" className="hidden">Buscar</button>
+             </form>
           </div>
           <Link href="#">
             <BsCart className="w-[30px] h-[30px] text-[#1E293B] transition-all ease-in-out duration-500 hover:text-[#4F46E5] hover:scale-110" />
