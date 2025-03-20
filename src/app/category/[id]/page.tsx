@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { FaShoppingCart } from "react-icons/fa";
 import { BsCartPlus } from "react-icons/bs";
 
 import { axiosCategoriesInstance, axiosProductsInstance } from "@/axiosConfig";
