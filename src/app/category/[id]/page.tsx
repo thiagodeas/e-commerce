@@ -6,12 +6,14 @@ import Link from "next/link";
 import { BsCartPlus } from "react-icons/bs";
 
 import { axiosCategoriesInstance, axiosProductsInstance } from "@/axiosConfig";
+import { useCartStore } from "@/stores/cartStore";
 
 export default function CategoryPage() {
   const { id } = useParams();
   const [products, setProducts] = useState<any[]>([]);
   const [categoryName, setCategoryName] = useState<string>(""); 
   const [error, setError] = useState<string | null>(null);
+  const addToCart = useCartStore((state) => state.addToCart);
 
   useEffect(() => {
     if (!id) return;
@@ -55,7 +57,9 @@ export default function CategoryPage() {
                 <h3 className="text-lg text-[#1E293B]">{product.name}</h3>
                 <p className="text-gray-500">R$ {product.price.toFixed(2)}</p> 
                 <div className="flex items-end justify-end w-full">
-                  <BsCartPlus className="w-[26px] h-[26px] text-[#1E293B] transition-all ease-in-out duration-500 hover:text-[#4F46E5] hover:scale-110" />
+                  <button onClick={() => addToCart(product)}>
+                    <BsCartPlus className="w-[26px] h-[26px] text-[#1E293B] transition-all ease-in-out duration-500 hover:text-[#4F46E5] hover:scale-110" />
+                  </button>
                 </div>
               </div>
               
