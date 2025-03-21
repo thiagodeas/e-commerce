@@ -2,22 +2,22 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { BsCart } from "react-icons/bs";
 import { GiClick } from "react-icons/gi";
+import { VscAccount } from "react-icons/vsc";
 
 import { axiosCategoriesInstance } from "@/axiosConfig";
 import { useCartStore } from "@/stores/cartStore";
+import { useAuthStore } from "@/stores/authStore"; 
+
 
 export default function Header() {
   const cartCount = useCartStore((state) => state.getCartCount());
+  const { isLoggedIn, logout } = useAuthStore();
+  
   const pathName = usePathname();
-  const showHeader = pathName !== "/login" && pathName !== "/register";
-  if (!showHeader) {
-    return null;
-  }
-
   const [categories, setCategories] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,6 +26,7 @@ export default function Header() {
   useEffect(() => {
     setClientCartCount(cartCount);
   }, [cartCount]);
+
 
   useEffect(() => {
     async function fetchCategories() {
@@ -45,6 +46,11 @@ export default function Header() {
     fetchCategories();
   }, []);
 
+  const showHeader = pathName !== "/login" && pathName !== "/register";
+  if (!showHeader) {
+    return null;
+  }
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
      
@@ -53,6 +59,15 @@ export default function Header() {
       window.location.href = `/search?query=${searchTerm}`;
     }
   };
+
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    logout();
+
+    router.push("/");
+  }
 
   return (
     <header className="w-full h-[150px] flex-col justify-between items-center">
@@ -74,6 +89,22 @@ export default function Header() {
             />
              <button type="submit" className="hidden">Buscar</button>
              </form>
+          </div>
+          <div className="flex items-center justify-center gap-x-[6px]">
+            <VscAccount className="w-[30px] h-[30px] text-[#1E293B]" />
+            <div className="flex flex-col text-[13px]">
+              <p>Bem vindo(a)!</p>
+              {!isLoggedIn ? (
+              <p>
+                <Link href="/login" className="font-bold hover:text-[#4F46E5]">Entrar</Link> ou 
+                <Link href="/register" className="font-bold hover:text-[#EF4444]"> Cadastrar</Link>
+              </p>
+              ) : (
+                <p>
+                  <button onClick={handleLogout} className="text-[#EF4444] font-semibold hover:font-bold">Desconectar</button>
+                </p>
+              )}
+            </div>
           </div>
           <Link href="#" className="relative">
             <BsCart className="w-[30px] h-[30px] text-[#1E293B] transition-all ease-in-out duration-500 hover:text-[#4F46E5] hover:scale-110" />
