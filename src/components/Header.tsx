@@ -21,6 +21,11 @@ export default function Header() {
   const [categories, setCategories] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [clientCartCount, setClientCartCount] = useState(0);
+
+  useEffect(() => {
+    setClientCartCount(cartCount);
+  }, [cartCount]);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -72,9 +77,9 @@ export default function Header() {
           </div>
           <Link href="#" className="relative">
             <BsCart className="w-[30px] h-[30px] text-[#1E293B] transition-all ease-in-out duration-500 hover:text-[#4F46E5] hover:scale-110" />
-            {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-[#EF4444] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                {cartCount}
+            {clientCartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-[#EF4444] text-white font-semibold text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {clientCartCount}
               </span>
             )}
           </Link>
