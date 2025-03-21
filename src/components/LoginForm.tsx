@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { axiosAuthInstance } from "@/axiosConfig";
+import { useAuthStore } from "@/stores/authStore"; 
 
 const FormSchema = z.object({
   email: z.string()
@@ -37,6 +38,8 @@ export default function LoginForm() {
     },
   })
 
+  const { login } = useAuthStore();
+
   const router = useRouter();
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -44,6 +47,7 @@ export default function LoginForm() {
       const response = await axiosAuthInstance.post("/login", data);
       const accessToken = response.data.accessToken;
       localStorage.setItem("accessToken", accessToken);
+      login();
 
       router.push("/");
     } catch (error) {
