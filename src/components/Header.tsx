@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -8,13 +8,12 @@ import { BsCart } from "react-icons/bs";
 import { GiClick } from "react-icons/gi";
 import { VscAccount } from "react-icons/vsc";
 
-import { axiosCategoriesInstance } from "@/axiosConfig";
 import { useCartStore } from "@/stores/cartStore";
 import { useAuthStore } from "@/stores/authStore"; 
+import { useCategoryStore } from "@/stores/categoryStore";
 
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -27,43 +26,31 @@ export default function Header() {
   const subtotal = getSubtotal();
   const { isLoggedIn, logout } = useAuthStore();
 
+
   const pathName = usePathname();
-  const [categories, setCategories] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const { categories, fetchCategories, catError } = useCategoryStore();
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const response = await axiosCategoriesInstance.get("/");
-
-        if (Array.isArray(response.data.categories)) {
-          setCategories(response.data.categories);
-        } else {
-          setError("Dados de categorias inválidos.");
-        }
-      } catch (err) {
-        setError("Erro ao carregar categorias.");
-      }
-    }
-
-    fetchCategories();
-  }, []);
+      if (categories.length === 0) fetchCategories();
+  }, [fetchCategories]);
 
   const showHeader = pathName !== "/login" && pathName !== "/register";
   if (!showHeader) {
     return null;
   }
 
+  const router = useRouter();
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (searchTerm.trim()) {
-      window.location.href = `/search?query=${searchTerm}`;
+  if (searchTerm.trim()) {
+      router.push(`/search?query=${searchTerm}`);
     }
-  };
 
-  const router = useRouter();
+    setSearchTerm('');
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -161,8 +148,8 @@ export default function Header() {
       </div>
 
       <div className="flex items-center justify-center gap-8 w-full pt-8 text-[20px] text-[#1E293B]">
-        {error ? (
-          <p>{error}</p>
+        {catError ? (
+          <p>{catError}</p>
         ) : categories.length > 0 ? (
           categories.map((category) => {
             const isActive = pathName === `/category/${category._id}`;
